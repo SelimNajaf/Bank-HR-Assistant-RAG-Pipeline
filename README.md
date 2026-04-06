@@ -116,4 +116,4 @@ Xəstəlik vərəqəsi işə çıxdığınız ilk gün ərzində HR departamenti
 * **Document Expandability:** Extend `data_processing.py` to ingest PDFs and Word documents alongside JSON.
 
 ---
-*Built with 💻 and ☕ by [Selim Najaf / [LinkedIn](https://www.linkedin.com/in/selimnajaf/)]*
+*Built with 💻 and ☕ by Selim Najaf / [LinkedIn](https://www.linkedin.com/in/selimnajaf/)*
