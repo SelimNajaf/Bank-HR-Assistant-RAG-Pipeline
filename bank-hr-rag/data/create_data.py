@@ -1,0 +1,53 @@
+import json
+import os
+from pathlib import Path
+
+toy_data_json = """
+{
+  "sened_basligi": "Kapital Bank - Daxili İş Qaydaları və Təlimatlar",
+  "bolmeler":[
+    {
+      "bolme_adi": "İş vaxtı və Məzuniyyət Siyasəti",
+      "mezmun": "Bankda rəsmi iş vaxtı həftənin I-V günləri, saat 09:00-dan 18:00-dək müəyyən edilmişdir. İşçilərin gün ərzində, adətən saat 13:00-dan 14:00-dək 1 saatlıq nahar fasiləsi hüququ vardır. Qüvvədə olan əmək qanunvericiliyinə və daxili qaydalara əsasən, hər bir əməkdaşa ildə ən azı 30 təqvim günü ödənişli əsas məzuniyyət verilir. Zərurət yarandıqda və birbaşa rəhbərin razılığı olduqda işçilər ödənişsiz məzuniyyət hüququndan da istifadə edə bilərlər. Xəstəlik səbəbindən işə gəlmədikdə, əməkdaş dərhal birbaşa rəhbərini məlumatlandırmalıdır. Tibb müəssisəsi tərəfindən verilmiş rəsmi xəstəlik vərəqəsi (bülleten) isə işə çıxdıqdan sonra ən geci 3 iş günü ərzində İnsan Resursları şöbəsinə təqdim edilməlidir.",
+      "test_ucun_suallar":[
+        "İşçinin illik ödənişli məzuniyyət müddəti nə qədərdir?",
+        "Xəstəlik vərəqəsi neçə gün ərzində HR şöbəsinə təqdim edilməlidir?",
+        "Nahar fasiləsi hansı saatları əhatə edir?"
+      ]
+    },
+    {
+      "bolme_adi": "İnformasiya Təhlükəsizliyi və IT Qaydaları",
+      "mezmun": "Bankın informasiya sistemlərində istifadə edilən parollar ən azı 12 simvoldan ibarət olmalı, daxilində mütləq şəkildə böyük/kiçik hərflər, rəqəmlər və xüsusi işarələr cəmləşməlidir. Məlumat təhlükəsizliyi siyasətinə əsasən, əməkdaşlar öz sistem parollarını hər 90 gündən bir mütləq şəkildə yeniləməlidirlər. Korporativ kompüterlərə kənar yaddaş qurğularının, xüsusilə də şəxsi USB fleşkartların və xarici disklərin qoşulması qəti qadağandır və bu cəhdlər sistem tərəfindən avtomatik bloklanır. Əgər əməkdaşın elektron poçtuna naməlum mənbədən şübhəli və ya fişinq (phishing) xarakterli məktub daxil olarsa, heç bir linkə daxil olmamalı və qoşma faylları yükləməməlidir. Belə hallarda məktubu açmadan dərhal daxili sistemdəki 'Şübhəli e-poçt' (Report Phishing) düyməsi vasitəsilə İnformasiya Təhlükəsizliyi şöbəsinə məlumat verilməlidir.",
+      "test_ucun_suallar":[
+        "Sistem parolunu neçə gündən bir yeniləmək lazımdır?",
+        "Şübhəli e-poçt gəldikdə əməkdaş nə etməlidir?",
+        "Korporativ kompüterlərdə USB fleşkartlardan istifadəyə icazə verilirmi?"
+      ]
+    },
+    {
+      "bolme_adi": "Daxili Davranış və Etika Kodeksi",
+      "mezmun": "Bank əməkdaşları iş saatlarında peşəkar və səliqəli biznes geyim tərzinə (korporativ dress code) qəti şəkildə riayət etməlidirlər. Lakin cümə günləri işçilərin rahatlığı üçün 'Smart Casual' geyim üslubuna (məsələn, səliqəli cins şalvar və yaxa düyməli köynək) icazə verilir. Müştərilər və həmkarlarla kommunikasiya zamanı daim nəzakətli olmaq, qarşılıqlı hörmət və etik davranış qaydalarını qorumaq hər bir işçinin birbaşa vəzifəsidir. Bank sirrinin və müştəri məlumatlarının məxfiliyinin qorunması təşkilatımızın ən vacib prinsiplərindən biridir. Müştərilərə aid şəxsi, maliyyə və digər həssas məlumatların kənar şəxslərə və ya üçüncü tərəflərə ötürülməsi qəti qadağandır. Məlumatların yalnız qanunvericiliklə tələb olunan rəsmi hallarda və müvafiq hüquqi icazələr alındıqdan sonra aidiyyəti dövlət orqanlarına verilməsinə icazə verilir.",
+      "test_ucun_suallar":[
+        "Müştəri məlumatlarının üçüncü tərəfə ötürülməsi qaydası necədir?",
+        "Cümə günləri üçün geyim tərzi (dress code) nələrə icazə verir?",
+        "Müştərilərlə ünsiyyət zamanı hansı əsas prinsiplərə riayət olunmalıdır?"
+      ]
+    }
+  ]
+}
+"""
+# 1. JSON mətnini Python lüğətinə (dictionary) çevirmək
+data = json.loads(toy_data_json)
+
+# 2. Faylın adı
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+fayl_adi = Path(os.getenv('DL_RAG', BASE_DIR / 'data' / 'daxili_qaydalar_toy_data.json'))
+
+# 3. Məlumatı JSON faylı kimi kompüterə yadda saxlamaq
+with open(fayl_adi, "w", encoding="utf-8") as fayl:
+    # indent=4 faylın səliqəli və oxunaqlı görünməsini təmin edir
+    # ensure_ascii=False Azərbaycan hərflərinin düzgün düşməsini təmin edir
+    json.dump(data, fayl, ensure_ascii=False, indent=4)
+
+print(f"✅ Məlumat uğurla '{fayl_adi}' adlı fayla yadda saxlanıldı!")
